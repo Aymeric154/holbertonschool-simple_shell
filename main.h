@@ -2,7 +2,7 @@
 #define MAIN_H
 
 #include <unistd.h>    /* for access, chdir, close, execve, _exit, fork, getpid
-			  , isatty, read, write, and other POSIX functions */
+			  , isatty, read, write */
 #include <dirent.h>    /* for closedir, opendir, readdir */
 #include <stdio.h>     /* for fflush, perror, printf, fprintf, vfprintf,
 			  sprintf, putchar, getline */
