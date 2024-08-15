@@ -14,5 +14,13 @@
 #include <sys/wait.h>  /* for wait, waitpid, wait3, wait4 */
 #include <string.h>    /* for strtok and more full library allowed */
 
+extern char **environ;
+
+void prompt(void);
+void execute_command(char *command);
+char *find_command_in_path(char *command);
+void handle_exit(char *command);
+void handle_env(char *command);
+int is_builtin_command(char *command);
 
 #endif
