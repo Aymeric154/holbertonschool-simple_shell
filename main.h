@@ -1,11 +1,11 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <unistd.h>    /* for access, chdir, close, execve, _exit, fork, getpid
-			  , isatty, read, write */
+#include <unistd.h>    /* for access, chdir, close, execve, _exit, fork,*/
+/* getpid, isatty, read, write */
 #include <dirent.h>    /* for closedir, opendir, readdir */
-#include <stdio.h>     /* for fflush, perror, printf, fprintf, vfprintf,
-			  sprintf, putchar, getline */
+#include <stdio.h>     /* for fflush, perror, printf, fprintf, vfprintf*/
+/* sprintf, putchar, getline */
 #include <stdlib.h>    /* for exit, free, malloc */
 #include <sys/types.h> /* for pid_t and other system types */
 #include <sys/stat.h>  /* for stat, lstat, fstat */
