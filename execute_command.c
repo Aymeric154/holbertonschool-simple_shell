@@ -81,8 +81,20 @@ void execute_command(char *command)
 	}
 	else
 	{
-		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		if (wait(&status) == -1)
+		{
+			perror("wait failed");
+		}
+		else
+		{
+			if (WIFEXITED(status))
+			{
+				printf("Child exited with status %d\n", WEXITSTATUS(status));
+			}
+			else if (WIFSIGNALED(status))
+			{
+				printf("Child terminated by signal %d\n", WTERMSIG(status));
+			}
+		}
 	}
 }
