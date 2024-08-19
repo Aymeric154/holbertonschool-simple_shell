@@ -65,14 +65,12 @@ void execute_command(char *command)
 	{
 		return;
 	}
-
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork failed");
 		return;
 	}
-
 	if (pid == 0)
 	{
 		execvp(argv[0], argv);
