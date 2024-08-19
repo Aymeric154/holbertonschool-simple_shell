@@ -1,40 +1,36 @@
 #include "main.h"
 
 /**
- * main -
+ * main - Entry point of the shell program.
  *
+ * Return: Always 0 (Success).
  */
 int main(void)
 {
-	char line = NULL;
+	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
 
-	signal(SIGINT, SIG_IGN); /* Ignore Ctrl+C */
+	while (1)
+	{
+		printf("$ ");
+		nread = getline(&line, &len, stdin);
 
-		while (1)
+		if (nread == -1)
 		{
-			prompt();
-			nread = getline(&line, &len, stdin);
-
-			if (nread == -1) /* Handle EOF (Ctrl+D) */
-			{
-				free(line);
-				exit(EXIT_SUCCESS);
-			}
-
-			if (line[nread - 1] == '\n') /* Remove trailing newline character */
-				line[nread - 1] = '\0';
-
-			if (is_builtin_command(line))
-			{
-				continue; /* Execute built-in commands directly */
-			}
-
-			execute_command(line);
+			free(line);
+			exit(EXIT_FAILURE);
 		}
+
+		if (line[nread - 1] == '\n')
+			line[nread - 1] = '\0';
+
+		if (is_builtin_command(line))
+			execute_command(line);
+		else
+			execute_command(line);
+	}
 
 	free(line);
 	return (0);
 }
-

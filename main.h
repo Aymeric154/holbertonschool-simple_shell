@@ -18,7 +18,7 @@ extern char **environ;
 
 void prompt(void);
 void execute_command(char *command);
-char *find_command_in_path(char *command);
+char *find_command_in_path(const char *command);
 void handle_exit(char *command);
 void handle_env(char *command);
 int is_builtin_command(char *command);

@@ -1,40 +1,37 @@
 #include "main.h"
 
-void handle_exit(char command)
+/**
+ * is_builtin_command - Checks if the command is a built-in command.
+ * @command: The command to check.
+ *
+ * Return: 1 if the command is a built-in command, otherwise 0.
+ */
+int is_builtin_command(char *command)
 {
-	if (strcmp(command, "exit") == 0)
-	{
-		free(command);
-		exit(EXIT_SUCCESS);
-	}
+	if (strcmp(command, "exit") == 0 || strcmp(command, "env") == 0)
+		return (1);
+	return (0);
 }
 
-void handle_env(charcommand)
+/**
+ * handle_exit - Exits the shell with status 0.
+ * @command: The command to handle (unused).
+ */
+void handle_exit(__attribute__((unused)) char *command)
 {
-	char *env;
-
-	if (strcmp(command, "env") == 0)
-	{
-		env = environ;
-		while (env != NULL)
-		{
-			printf("%s\n", env);
-			env++;
-		}
-	}
+	exit(0);
 }
 
-int is_builtin_command(charcommand)
+/**
+ * handle_env - Prints the environment variables.
+ * @command: The command to handle (unused).
+ */
+void handle_env(__attribute__((unused)) char *command)
 {
-	if (strcmp(command, "exit") == 0)
+	int i;
+
+	for (i = 0; environ[i] != NULL; i++)
 	{
-		handle_exit(command);
-		return 1;
+		printf("%s\n", environ[i]);
 	}
-	else if (strcmp(command, "env") == 0)
-	{
-		handle_env(command);
-		return 1;
-	}
-	return 0;
 }
