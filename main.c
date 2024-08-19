@@ -13,7 +13,7 @@ int main(void)
 
 	while (1)
 	{
-		printf("$ ");
+		prompt();
 		nread = getline(&line, &len, stdin);
 
 		if (nread == -1)

@@ -10,5 +10,5 @@
 void prompt(void)
 {
 	if (isatty(STDIN_FILENO))
-		write(STDOUT_FILENO, "#shell$ ", 8);
+		write(STDOUT_FILENO, "Shell$ ", 8);
 }
