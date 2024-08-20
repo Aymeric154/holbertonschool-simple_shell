@@ -26,7 +26,7 @@ void handle_exit(__attribute__((unused)) char *command)
  * handle_env - Prints the environment variables.
  * @command: The command to handle (unused).
  */
-void handle_env(__attribute__((unused)) char *command)
+int handle_env(__attribute__((unused)) char *command)
 {
 	int i;
 
@@ -34,4 +34,5 @@ void handle_env(__attribute__((unused)) char *command)
 	{
 		printf("%s\n", environ[i]);
 	}
+	return (0);
 }
