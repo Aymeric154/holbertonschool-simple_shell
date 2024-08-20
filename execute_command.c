@@ -14,10 +14,14 @@ void execute_command(char *command)
 		return;
 
 	if (strcmp(command, "exit") == 0)
-		exit(EXIT_SUCCESS); /* Exit the shell */
+	{
+		exit(EXIT_SUCCESS);
+	}
 
 	if (command[0] == '/' || command[0] == '.')
-		cmd_path = command; /* If it's an absolute or relative path, use directly */
+	{
+		cmd_path = command;
+	}
 	else
 	{
 		cmd_path = find_command_in_path(command);
@@ -27,6 +31,7 @@ void execute_command(char *command)
 			return;
 		}
 	}
+
 	argv[0] = cmd_path;
 	argv[1] = NULL;
 
@@ -36,9 +41,9 @@ void execute_command(char *command)
 		perror("fork");
 		if (cmd_path != command)
 			free(cmd_path);
-		exit(EXIT_FAILURE);
+		return;
 	}
-	else if (pid == 0) /* Child process */
+	else if (pid == 0)
 	{
 		if (execve(cmd_path, argv, environ) == -1)
 		{
@@ -48,9 +53,22 @@ void execute_command(char *command)
 			_exit(EXIT_FAILURE);
 		}
 	}
-	else /* Parent process */
-		wait(&status);
+	else
+	{
+		if (wait(&status) == -1)
+		{
+			perror("wait");
+			return;
+		}
 
-	if (cmd_path != command) /* Only free if we allocated new memory */
+		if (WIFEXITED(status))
+		{
+			int exit_status = WEXITSTATUS(status);
+			if (exit_status != 0)
+				fprintf(stderr, "./shell: Child exited with status %d\n", exit_status);
+		}
+	}
+
+	if (cmd_path != command)
 		free(cmd_path);
 }
