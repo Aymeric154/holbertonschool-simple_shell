@@ -13,7 +13,7 @@ void execute_command(char *command)
 	/* Check if the command is an absolute or relative path */
 	if (command[0] == '/' || command[0] == '.')
 	{
-		cmd_path = command;  /* If it's an absolute or relative path, use it directly */
+		cmd_path = command;/* If it's an absolute or relative path, use directly */
 	}
 	else
 	{
@@ -32,7 +32,8 @@ void execute_command(char *command)
 	if (pid == -1)
 	{
 		perror("fork");
-		if (cmd_path != command)  /* Only free if we allocated new memory */
+		/* Only free if we allocated new memory */
+		if (cmd_path != command)
 			free(cmd_path);
 		exit(EXIT_FAILURE);
 	}
