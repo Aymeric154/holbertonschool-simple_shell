@@ -1,5 +1,7 @@
 #include "main.h"
 
+#define BUFFER_SIZE 1024
+
 /**
  * main - Entry point of the shell program.
  *
@@ -7,31 +9,42 @@
  */
 int main(void)
 {
-	char *line = NULL;
-	size_t len = 0;
+	char buffer[BUFFER_SIZE];
 	ssize_t nread;
+	char *line;
 
 	while (1)
 	{
 		prompt();
-		nread = getline(&line, &len, stdin);
+		nread = read(STDIN_FILENO, buffer, BUFFER_SIZE - 1);
 
 		if (nread == -1)
 		{
-			free(line);
+			perror("read");
 			exit(EXIT_FAILURE);
 		}
 
-		if (line[nread - 1] == '\n')
-			line[nread - 1] = '\0';
+		if (nread == 0)
+		{
+			exit(EXIT_SUCCESS);
+		}
 
-		if (is_builtin_command(line))
-			execute_command(line);
+		buffer[nread] = '\0';
 
+		/* Removing trailing newline if present */
+		if (buffer[nread - 1] == '\n')
+			buffer[nread - 1] = '\0';
+
+		/* Processing the input */
+		line = buffer;
+		if (strcmp(line, "exit") == 0)
+			handle_exit(line);
+		else if (strcmp(line, "env") == 0)
+			handle_env(line);
 		else
 			execute_command(line);
 	}
 
-	free(line);
 	return (0);
 }
+

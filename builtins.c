@@ -38,5 +38,6 @@ int handle_env(__attribute__((unused)) char *command)
 	{
 		printf("%s\n", environ[i]);
 	}
-	return (0);
+
+	exit(0);
 }
