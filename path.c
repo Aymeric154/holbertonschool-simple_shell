@@ -5,10 +5,10 @@
  * @command: The command to find.
  * Return: The full path if found, otherwise NULL.
  */
-
 char *find_command_in_path(const char *command)
 {
-	char *path_env = NULL, *path_copy, *token, path[PATH_MAX];
+	char *path_env = NULL, *path_copy, *token;
+	char path[PATH_MAX];
 	int i;
 
 	for (i = 0; environ[i]; i++)
@@ -30,12 +30,18 @@ char *find_command_in_path(const char *command)
 	token = strtok(path_copy, ":");
 	while (token)
 	{
-		snprintf(path, sizeof(path), "%s/%s", token, command);
+		path[0] = '\0';
+
+		strcat(path, token);
+		strcat(path, "/");
+		strcat(path, command);
+
 		if (access(path, X_OK) == 0)
 		{
 			free(path_copy);
 			return (strdup(path));
 		}
+
 		token = strtok(NULL, ":");
 	}
 

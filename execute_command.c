@@ -1,5 +1,8 @@
 #include "main.h"
-
+/**
+ * execute_command - Executes a command in a child process.
+ * @command: The command to be executed.
+ */
 void execute_command(char *command)
 {
 	pid_t pid;
@@ -10,11 +13,11 @@ void execute_command(char *command)
 	if (command == NULL || *command == '\0')
 		return;
 
-	/* Check if the command is an absolute or relative path */
+	if (strcmp(command, "exit") == 0)
+		exit(EXIT_SUCCESS); /* Exit the shell */
+
 	if (command[0] == '/' || command[0] == '.')
-	{
-		cmd_path = command;/* If it's an absolute or relative path, use directly */
-	}
+		cmd_path = command; /* If it's an absolute or relative path, use directly */
 	else
 	{
 		cmd_path = find_command_in_path(command);
@@ -24,7 +27,6 @@ void execute_command(char *command)
 			return;
 		}
 	}
-
 	argv[0] = cmd_path;
 	argv[1] = NULL;
 
@@ -32,7 +34,6 @@ void execute_command(char *command)
 	if (pid == -1)
 	{
 		perror("fork");
-		/* Only free if we allocated new memory */
 		if (cmd_path != command)
 			free(cmd_path);
 		exit(EXIT_FAILURE);
@@ -48,10 +49,8 @@ void execute_command(char *command)
 		}
 	}
 	else /* Parent process */
-	{
 		wait(&status);
-	}
 
-	if (cmd_path != command)  /* Only free if we allocated new memory */
+	if (cmd_path != command) /* Only free if we allocated new memory */
 		free(cmd_path);
 }
