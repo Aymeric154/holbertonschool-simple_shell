@@ -27,6 +27,7 @@ int main(void)
 
 		if (is_builtin_command(line))
 			execute_command(line);
+
 		else
 			execute_command(line);
 	}
