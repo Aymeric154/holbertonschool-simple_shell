@@ -32,4 +32,6 @@ void handle_env(__attribute__((unused)) char *command)
 	{
 		printf("%s\n", environ[i]);
 	}
+
+	exit(0);
 }
