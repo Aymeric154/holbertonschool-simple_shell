@@ -1,98 +1,57 @@
 #include "main.h"
 
-#define MAX_ARGS 64
-
-/**
- * parse_command - Tokenizes the command string into arguments.
- * @command: The command to parse.
- * @argv: The array to store the arguments.
- *
- * Return: The number of arguments parsed.
- */
-int parse_command(char *command, char *argv[])
-{
-	char *token;
-	int i = 0;
-
-	token = strtok(command, " ");
-	while (token != NULL && i < MAX_ARGS - 1)
-	{
-		argv[i++] = token;
-		token = strtok(NULL, " ");
-	}
-	argv[i] = NULL;
-	return (i);
-}
-
-/**
- * handle_builtin - Handles built-in commands.
- * @argv: The array of arguments.
- *
- * Return: 1 if the command is handled, otherwise 0.
- */
-int handle_builtin(char *argv[])
-{
-	if (strcmp(argv[0], "exit") == 0)
-	{
-		handle_exit(NULL);
-		return (1);
-	}
-	if (strcmp(argv[0], "env") == 0)
-	{
-		handle_env(NULL);
-		return (1);
-	}
-	return (0);
-}
-
-/**
- * execute_command - Executes a given command.
- * @command: The command to execute.
- *
- * Description: Parses the command, handles built-in commands, and executes
- *              the command using execve in a child process.
- */
-
 void execute_command(char *command)
 {
-	char *argv[2];
 	pid_t pid;
 	int status;
+	char *argv[2];
+	char *cmd_path;
 
-	parse_command(command, argv);
+	if (command == NULL || *command == '\0')
+		return;
 
-	if (handle_builtin(argv))
+	/* Check if the command is an absolute or relative path */
+	if (command[0] == '/' || command[0] == '.')
 	{
-		return;
-	}
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork failed");
-		return;
-	}
-	if (pid == 0)
-	{
-		execvp(argv[0], argv);
-		perror("execvp failed");
-		exit(EXIT_FAILURE);
+		cmd_path = command;/* If it's an absolute or relative path, use directly */
 	}
 	else
 	{
-		if (wait(&status) == -1)
+		cmd_path = find_command_in_path(command);
+		if (cmd_path == NULL)
 		{
-			perror("wait failed");
-		}
-		else
-		{
-			if (WIFEXITED(status))
-			{
-				printf("Child exited with status %d\n", WEXITSTATUS(status));
-			}
-			else if (WIFSIGNALED(status))
-			{
-				printf("Child terminated by signal %d\n", WTERMSIG(status));
-			}
+			fprintf(stderr, "./shell: %s: command not found\n", command);
+			return;
 		}
 	}
+
+	argv[0] = cmd_path;
+	argv[1] = NULL;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		/* Only free if we allocated new memory */
+		if (cmd_path != command)
+			free(cmd_path);
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0) /* Child process */
+	{
+		if (execve(cmd_path, argv, environ) == -1)
+		{
+			perror("./shell");
+			if (cmd_path != command)
+				free(cmd_path);
+			_exit(EXIT_FAILURE);
+		}
+	}
+	else /* Parent process */
+	{
+		wait(&status);
+	}
+
+	if (cmd_path != command)  /* Only free if we allocated new memory */
+		free(cmd_path);
 }

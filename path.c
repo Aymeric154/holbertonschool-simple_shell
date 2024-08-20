@@ -5,6 +5,7 @@
  * @command: The command to find.
  * Return: The full path if found, otherwise NULL.
  */
+
 char *find_command_in_path(const char *command)
 {
 	char *path_env = NULL, *path_copy, *token, path[PATH_MAX];
@@ -41,4 +42,3 @@ char *find_command_in_path(const char *command)
 	free(path_copy);
 	return (NULL);
 }
-
