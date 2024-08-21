@@ -1,0 +1,65 @@
+.TH SHELL 1 					 "Simple Shell Manual"
+.SH NAME
+shell \- a simple command-line interpreter
+.SH SYNOPSIS
+.B shell
+.SH DESCRIPTION
+.B shell
+is a simple command-line interpreter that executes commands from the user. It supports basic built-in commands such as \fBexit\fP and \fBenv\fP, as well as executing any executable found in the system's PATH.
+
+.SH USAGE
+.TP
+\fBexit\fP
+Exits the shell.
+.TP
+\fBenv\fP
+Prints the current environment variables.
+.TP
+\fIcommand_name\fP
+Executes the specified command. If the command is in the system's PATH, it will be executed. If the command is provided as an absolute or relative path, that executable will be run.
+.TP
+\fB/path/to/command_name\fP
+Executes a command located at the specified path.
+.TP
+\fB./command_name\fP
+Executes a command in the current directory.
+
+.SH OPTIONS
+There are no options for this shell. Commands and arguments are passed directly to the interpreter.
+
+.SH FILES
+.TP
+\fImain.h\fP
+Header file that contains function prototypes and necessary includes.
+.TP
+\fImain.c\fP
+Contains the main loop that reads user input and processes commands.
+.TP
+\fIbuiltins.c\fP
+Implements built-in commands like \fBexit\fP and \fBenv\fP.
+.TP
+\fIexecute_command.c\fP
+Handles execution of commands in child processes.
+.TP
+\fIprompt.c\fP
+Displays the shell prompt when the input is from a terminal.
+.TP
+\fIpath.c\fP
+Implements searching for commands in the system PATH.
+
+.SH RETURN VALUE
+The shell returns the exit status of the last executed command, or 0 if no command was executed.
+
+.SH SEE ALSO
+sh(1), bash(1)
+
+.SH AUTHOR
+This man page was written by Antoine Lafitte and Aymeric Gelle.
+
+.SH BUGS
+No known bugs.
+
+.SH COPYRIGHT
+This is the a free software you can modify under the terms of the MIT license.
+
+
