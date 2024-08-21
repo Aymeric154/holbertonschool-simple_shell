@@ -21,7 +21,6 @@ int is_builtin_command(char *command)
 int handle_exit(__attribute__((unused)) char *command)
 {
 	exit(0);
-	return (0);
 }
 
 /**
@@ -39,5 +38,5 @@ int handle_env(__attribute__((unused)) char *command)
 		printf("%s\n", environ[i]);
 	}
 
-	exit(0);
+	return (0);
 }
