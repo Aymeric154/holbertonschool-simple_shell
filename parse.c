@@ -2,6 +2,14 @@
 
 #define MAX_ARGS 64  /* Maximum number of arguments */
 
+
+/**
+ * parse_command - Parses the input command string into an array of arguments.
+ * @command: The command string to parse.
+ *
+ * Return: An array of arguments (NULL-terminated).
+ */
+
 char **parse_command(char *command)
 {
 	char **argv;
