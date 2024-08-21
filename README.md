@@ -1,4 +1,4 @@
-# holbertonschool-simple_shell
+# holbertonschool-simple_shell 💻
 
 ## Description
 Simple Shell is a replica of a Unix shell, written in C. It allows you to execute commands interactively or non-interactively. This project was carried out as part of the Holberton School program, with the goal of better understanding the fundamental concepts of the Unix operating system, such as process management, system calls, and command environments.
@@ -10,11 +10,11 @@ Simple Shell is a replica of a Unix shell, written in C. It allows you to execut
 
 You should see a prompt where you can type commands:
 ```bash
-Shell$ <span style="color: #DFAF2C">ls </span> or <span style="color: #DFAF2C">/bin/ls </span>
+Shell$ ![ls](https://img.shields.io/badge/ls-yellow) ou ![/bin/ls](https://img.shields.io/badge//bin/ls-yellow)
 
 file1 file2 file3 ...
 
-Shell$ <span style="color: #FF0000">exit</span>
+Shell$ ![exit](https://img.shields.io/badge/exit-red)
 ```
 
 **Non-interactive mode**: The shell can execute a series of commands provided via a file or stream redirection. You can execute Non-interactive mode with:
