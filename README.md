@@ -1,32 +1,52 @@
 # holbertonschool-simple_shell 💻
 
-## Description
+### Description
 Simple Shell is a replica of a Unix shell, written in C. It allows you to execute commands interactively or non-interactively. This project was carried out as part of the Holberton School program, with the goal of better understanding the fundamental concepts of the Unix operating system, such as process management, system calls, and command environments.
 
-## Features
+## How to compile
+
+To compile this project with `gcc`, use the following command:
+   ```bash
+   gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o simple_shell
+   ```
+and then launch the shell with this command:
+```bash
+./simple_shell
+```
+
+## Usage
+###Features
 
 **Interactive mode**: The shell displays a prompt, waits for a command from the user, executes it, and then displays the prompt again. You can execute interactive mode with
+```bash
 ./simple_shell 
+```
 
 You should see a prompt where you can type commands:
 ```bash
-Shell$ ![ls](https://img.shields.io/badge/ls-yellow) ou ![/bin/ls](https://img.shields.io/badge//bin/ls-yellow)
+Shell$ `ls`  or `/bin/ls`
 
 file1 file2 file3 ...
 
-Shell$ ![exit](https://img.shields.io/badge/exit-red)
+Shell$ `exit`
 ```
 
 **Non-interactive mode**: The shell can execute a series of commands provided via a file or stream redirection. You can execute Non-interactive mode with:
 ```bash
-echo <span style="color: #DFAF2C">"/bin/ls"</span> | ./simple_shell
+echo "/bin/ls" | ./simple_shell
 ```
 
-**Built-in commands**:
+## Built-in commands
 
- - exit: Exits the shell
+ + exit: exits the shell.
+   ```bash
+   Shell$ exit
+   ```
    
- - env: Displays the current environment variables.
+ + env: Displays the current environment variables.
+   ```bash
+   Shell$ env
+   ```
 
 **Command management**: The shell searches for executables in the directories defined by the PATH environment variable and executes the corresponding commands.
 
