@@ -22,5 +22,6 @@ char *find_command_in_path(const char *command);
 int handle_exit(char *command);
 int handle_env(char *command);
 int is_builtin_command(char *command);
+char **parse_command(char *command);
 
 #endif
