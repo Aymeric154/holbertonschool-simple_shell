@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+ * execute_command - Executes a command in a child process.
+ * @command: The command string to be executed.
+ */
+
 void execute_command(char *command)
 {
 	pid_t pid;
